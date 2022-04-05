@@ -1,0 +1,27 @@
+{
+  "private": true,
+  "name": "solid-service-api",
+  "version": "0.0.0",
+  "main": "dist/worker.js",
+  "scripts": {
+    "dev": "vpc dev src/worker.ts --kv SESSION --env-path .env",
+    "build": "tsc && vpc build -m src/worker.ts dist/worker.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{js,css,json,md}'",
+    "deploy": "wrangler publish"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^3.4.0",
+    "@miniflare/kv": "^2.4.0",
+    "@types/cookie": "^0.4.1",
+    "@types/jsonwebtoken": "^8.5.8",
+    "miniflare": "^2.4.0",
+    "typescript": "^4.5.4",
+    "vite": "^2.9.0",
+    "vite-plugin-cloudflare": "^0.1.0"
+  },
+  "dependencies": {
+    "@tsndr/cloudflare-worker-jwt": "^1.1.6",
+    "cookie": "^0.4.2"
+  }
+}

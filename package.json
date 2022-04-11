@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "solid-service-api",
-  "version": "0.0.0",
+  "name": "solid-api",
+  "version": "1.0.0",
   "main": "dist/worker.js",
   "scripts": {
     "dev": "vpc dev src/worker.ts --kv SESSION --env-path .env",
@@ -16,12 +16,18 @@
     "@types/cookie": "^0.4.1",
     "@types/jsonwebtoken": "^8.5.8",
     "miniflare": "^2.4.0",
-    "typescript": "^4.5.4",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3",
     "vite": "^2.9.0",
-    "vite-plugin-cloudflare": "^0.1.0"
+    "vite-plugin-cloudflare": "^0.1.1"
   },
   "dependencies": {
+    "@supabase/postgrest-js": "^0.37.2",
     "@tsndr/cloudflare-worker-jwt": "^1.1.6",
-    "cookie": "^0.4.2"
+    "cookie": "^0.4.2",
+    "fetch": "^1.1.0",
+    "itty-router": "^2.6.1",
+    "itty-router-extras": "^0.4.2",
+    "xhr-shim": "^0.1.2"
   }
 }

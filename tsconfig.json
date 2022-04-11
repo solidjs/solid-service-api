@@ -15,11 +15,8 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "types": [
-      "vite/client",
-      "@cloudflare/workers-types"
-    ]
+    "types": ["vite/client", "@cloudflare/workers-types"]
   },
-  "include": ["src"],
+  "include": ["src", "types.d.ts"],
   "exclude": ["node_modules"]
 }

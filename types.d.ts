@@ -1,7 +1,7 @@
 
 type Profile = {
-  login: string;
   id: number;
+  login: string;
   node_id: string;
   avatar_url: string;
   gravatar_id: string;
@@ -35,8 +35,10 @@ type Profile = {
 };
 
 type AuthSession = {
-  user_id: string;
-  profile: Profile;
+  id: string,
+  display: string,
+  avatar: string,
+  github_register: string,
 };
 
 type Session<T> = {
@@ -45,5 +47,4 @@ type Session<T> = {
   data: T;
   commit(session: Session<T>, expires_at: number): Promise<string>;
   verify(): Promise<boolean>;
-  destroy(): Promise<string>;
 };

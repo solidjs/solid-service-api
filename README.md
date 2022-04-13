@@ -133,7 +133,7 @@ Response:
 }
 ```
 
-#### Update [PUT] /repl/[:od]
+#### Update [PUT] /repl/[:id]
 
 Update a new REPL record for the user.
 
@@ -172,6 +172,15 @@ Retrieves a REPL based on the UUID.
 #### Delete [DELETE] /repl/[:id]
 
 Delets a REPL based on the UUID. Successful deletions will return a status 200. Note that the service uses soft deletes. They are not retrievable via the API but are marked in the database itself.
+
+## TO-Do & Ideas
+
+- Enable user blocking options
+- Add better validation for certain endpoints
+- Parse and validate REPLs with more granular detail (refer to Solid REPL output)
+- Add ability to save REPL to a gist
+- Add ability to create a repository of an example
+- Private/public mode
 
 ## Contributors
 

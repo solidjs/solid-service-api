@@ -56,14 +56,14 @@ The API endpoints use standard HTTP status codes for errors and a consistent err
 
 ```json
 {
-  "status_code: "SOME_ERROR",
+  "status_code": "SOME_ERROR",
   "status_message": "A descriptive error response."
 }
 ```
 
 ## Endpoints
 
-The following is an outline of endpoints that the service provides.
+The following is an outline of endpoints that the service provides. Note that you may find a Postman collection set in the root of the directory. This should help with quickly getting setup and making calls
 
 ### Auth
 
@@ -88,7 +88,7 @@ Retrieves the current users profile and responds with basic information:
 
 This REPL collection enables endpoints to manage repl listings and powers the Solid Playground. REPL records have a set of basic information: `REPL data`, `labels`, `Solid version`, `size in bytes`, `creation date` and `updated date`.
 
-#### [GET] /repl?{&limit}{&offset}{&asc}
+#### List [GET] /repl?{&limit}{&offset}{&asc}
 
 Returns a list of REPLs owned by the current user. The endpoint is paginated and can potentially support filters.
 
@@ -110,7 +110,7 @@ Returns a list of REPLs owned by the current user. The endpoint is paginated and
 }
 ```
 
-#### [POST] /repl
+#### Create [POST] /repl
 
 Creates a new REPL record for the user.
 
@@ -133,7 +133,30 @@ Response:
 }
 ```
 
-#### [GET] /repl/[:id]
+#### Update [PUT] /repl/[:od]
+
+Update a new REPL record for the user.
+
+Request:
+
+```json
+{
+  "title": "Counter Example",
+  "version": "1.0",
+  "labels": ["examples", "basic"],
+  "data": "...REPL data..."
+}
+```
+
+Response:
+
+```json
+{
+  "id": "77aa5eec-19bd-471c-8b49-bd11a07c6547"
+}
+```
+
+#### Retrieve [GET] /repl/[:id]
 
 Retrieves a REPL based on the UUID.
 
@@ -146,6 +169,10 @@ Retrieves a REPL based on the UUID.
 }
 ```
 
-#### [DELETE] /repl/[:id]
+#### Delete [DELETE] /repl/[:id]
 
-Delets a REPL based on the UUID. Successful deletions will return a status 200.
+Delets a REPL based on the UUID. Successful deletions will return a status 200. Note that the service uses soft deletes. They are not retrievable via the API but are marked in the database itself.
+
+## Contributors
+
+A special thank you to to Christian Hensen [ch99q](https://github.com/ch99q) for initially setting up the foundations of this project and sorting out the Stytch integration. A big thank you to M. Bagher Abiat [Aslemammad](https://github.com/Aslemammad) who made vite-plugin-cloudflare which is one of the best utilities we've seen for working with Cloudflare.

@@ -1,0 +1,273 @@
+{
+	"info": {
+		"_postman_id": "d8e46ece-6e20-4114-a9d7-bfbb42801d00",
+		"name": "Solid Services API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8787/profile",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create REPL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Final test\",\n    \"version\": \"1.0\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List REPLs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put REPLs",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Change this value\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl/0efa0fb1-0634-44b5-97ad-b153d58faf6b",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl",
+						"0efa0fb1-0634-44b5-97ad-b153d58faf6b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete REPL",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl/d5943629-3fcc-4984-9fa7-f273d766f847",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl",
+						"d5943629-3fcc-4984-9fa7-f273d766f847"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get REPL",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl/0efa0fb1-0634-44b5-97ad-b153d58faf6b",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl",
+						"0efa0fb1-0634-44b5-97ad-b153d58faf6b"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/status",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,5 +1,5 @@
 <p>
-  <img width="100%" src="https://assets.solidjs.com/banner?project=Service API&type=core" alt="Solid Service API">
+  <img width="100%" src="https://assets.solidjs.com/banner?project=Service%20API&type=core" alt="Solid Service API">
 </p>
 
 # Solid Service API

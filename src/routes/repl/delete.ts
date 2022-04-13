@@ -1,42 +1,39 @@
-import { failure, cors, success, createSession, createSupabase } from '../../util';
+import { failure, success, createSupabase } from "../../util";
 
-// Marks a REPL as deleted
-export default async function(request: Request & {
-  params: {
-    id: string;
+/**
+ * Soft deletes a users REPL
+ */
+export default async function (
+  request: AuthenticatedRequest & {
+    params: {
+      id: string;
+    };
   }
-}) {
-  const session = await createSession<AuthSession>(request, "session");
-  if (!(await session.verify())) {
-    return failure(401, "Unauthenticated");
-  }
-  const db = createSupabase();
-
+) {
   // Check if the record exists
+  const db = createSupabase();
   const { count, error } = await db
-    .from('repls')
-    .select('*', { count: 'exact' })
-    .eq('id', request.params.id)
-    .is('deleted_at', null);
+    .from("repls")
+    .select("*", { count: "exact" })
+    .eq("id", request.params.id)
+    .eq("user_id", request.session.data.id)
+    .is("deleted_at", null);
+
+  if (error !== null) {
+    return failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");
+  }
   if (count == 0) {
-    console.log(error);
-    return failure(404, "InvalidID");
-  }
-  try {
-    // Soft delete the record
-    await db
-      .from('repls')
-      .update({ deleted_at: "NOW()" })
-      .eq('id', request.params.id);
-    return success(
-      {},
-      {
-        headers: {
-          ...cors(request),
-        },
-      }
+    return failure(
+      404,
+      "An invalid or unowned REPL ID was supplied",
+      "INVALID_REPL_ID"
     );
-  } catch(err) {
-    return failure(400, "InternalError");
   }
+  // Soft delete the record
+  await db
+    .from("repls")
+    .update({ deleted_at: "NOW()" })
+    .eq("id", request.params.id);
+
+  return success({});
 }

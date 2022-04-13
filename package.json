@@ -1,13 +1,24 @@
 {
   "private": true,
-  "name": "solid-api",
+  "name": "solid-service-api",
   "version": "1.0.0",
   "main": "dist/worker.js",
+  "description": "Source code that powers api.solidjs.com.",
+  "contributors": [
+    {
+      "name": "David Di Biase (davedbase)",
+      "url": "https://github.com/davedbase"
+    },
+    {
+      "name": "Christian Hansen (ch99q)",
+      "url": "https://github.com/ch99q"
+    }
+  ],
   "scripts": {
-    "dev": "vpc dev src/worker.ts --kv SESSION --env-path .env",
+    "dev": "miniflare --live-reload --watch --verbose",
     "build": "tsc && vpc build -m src/worker.ts dist/worker.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write '**/*.{js,css,json,md}'",
+    "format": "prettier --write '**/*.{ts,css,json,md}'",
     "deploy": "wrangler publish"
   },
   "devDependencies": {

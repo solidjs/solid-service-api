@@ -1,4 +1,4 @@
-import { failure, cors, success, createSession, createSupabase } from '../../util';
+import { failure, success, createSupabase } from "../../util";
 
 type CreateREPL = {
   title: string;
@@ -7,33 +7,38 @@ type CreateREPL = {
 };
 
 // Lists all available repls
-export default async function(request: Request & {
-  content: CreateREPL
-}) {
-  const session = await createSession<AuthSession>(request, "session");
-  if (!(await session.verify())) {
-    return failure(401, "Unauthenticated");
+export default async function (
+  request: AuthenticatedRequest & {
+    content: CreateREPL;
   }
+) {
+  const url = new URL(request.url);
+  const limit = url.searchParams.get("limit");
+  const offset = url.searchParams.get("offset");
+  const ascending = url.searchParams.get("asc");
+
+  // Count the listings
   const db = createSupabase();
-  try {
-    const { data: repls, error } = await db
-      .from('repls')
-      .select('id,title,labels,data,version,size,created_at,updated_at')
-      .eq('user_id', session.data.id)
-      .is('deleted_at', null);
-    if (error !== null) {
-      return failure(400, "InternalError");
-    }
-    return success(
-      repls,
-      {
-        headers: {
-          ...cors(request),
-        },
-      }
-    );
-  } catch(err) {
-    console.log(err)
-    return failure(400, "InternalError");
+  const { count } = await db
+    .from("repls")
+    .select("*", { count: "exact" })
+    .eq("user_id", request.session.data.id)
+    .is("deleted_at", null);
+
+  const { data: repls, error } = await db
+    .from("repls")
+    .select("id,title,labels,data,version,size,created_at,updated_at")
+    .eq("user_id", request.session.data.id)
+    .range(offset ? parseInt(offset) : 0, limit ? parseInt(limit) : 25)
+    .order("created_at", { ascending: ascending ? true : false })
+    .is("deleted_at", null);
+
+  if (error !== null) {
+    console.log(error);
+    return failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");
   }
+  return success({
+    total: count,
+    list: repls,
+  });
 }

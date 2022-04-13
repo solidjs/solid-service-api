@@ -1,74 +1,102 @@
-import { createClient } from '@supabase/supabase-js';
 import * as jwt from "@tsndr/cloudflare-worker-jwt";
+import { createClient } from "@supabase/supabase-js";
 
-// Creates a new database client
+/**
+ * Creates a new database client
+ *
+ * @returns Returns a new initialized Supabase client
+ */
 export function createSupabase() {
   return createClient(SUPABASE_URL, SUPABASE_KEY, {
-    fetch
+    fetch,
   });
 }
 
-// Very basic success handler
-export function success(response: any, init?: ResponseInit) {
-  return new Response(
-    JSON.stringify(response),
-    {
-      ...init,
-      headers: {
-        ...init?.headers,
-      },
-    }
-  );
+/**
+ * Sends a structured success response to the user.
+ *
+ * @param data {object|string} Data to send back as serialized response
+ * @param init {object} Response initialization values
+ * @returns Response object to send back
+ */
+export function success(data: object | string | null, init?: ResponseInit) {
+  return new Response(data ? JSON.stringify(data) : null, {
+    ...init,
+    headers: {
+      ...cors(),
+      ...init?.headers,
+    },
+  });
 }
 
-// Helpful failure handler
-export function failure(code: number, message: string) {
+/**
+ * Sends a failure response to the user.
+ *
+ * @param code {number} HTTP Status code
+ * @param message {string} Message of the error
+ * @returns Response object to send back
+ */
+export function failure(
+  code: number,
+  message: string,
+  status_code: string | undefined = undefined
+) {
   return new Response(
     JSON.stringify({
-      status_code: code,
+      status_code,
       status_message: message,
     }),
     {
       status: code,
       statusText: message,
       headers: {
-        "Content-Type": "application/json",
+        ...cors(),
       },
     }
   );
 }
 
-// Cors handler pre-flight requests
+/**
+ * Handles preflight OPTION requests.
+ *
+ * @param request {Request} Request object
+ * @returns Properly structured preflight response
+ */
 export function handleOptions(request: Request) {
-  let headers = request.headers
-  if ( 
+  let headers = request.headers;
+  if (
     headers.get("Origin") !== null &&
     headers.get("Access-Control-Request-Method") !== null &&
     headers.get("Access-Control-Request-Headers") !== null
   ) {
     return new Response(null, {
       headers: {
-        ...cors(request),       
-      }
+        ...cors(request),
+      },
     });
   } else {
     return new Response(null, {
       headers: {
         Allow: "GET, HEAD, POST, OPTIONS",
       },
-    })
+    });
   }
 }
 
-// Cors output generator based on dynamic request
-export function cors(_request: Request) {
+/**
+ * CORs output generator based on dynamic request.
+ *
+ * @param _request {Request} Incoming request object
+ * @returns A set of default cors headers to reply with.
+ */
+export function cors(_request?: Request) {
   return {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
     "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
-    "Access-Control-Max-Age": "86400"
+    "Access-Control-Max-Age": "86400",
   };
 }
 
@@ -85,7 +113,17 @@ export function request<T = any>(url: string, options: any): Promise<T> {
   }).then((res) => res.json());
 }
 
-// Session decomposition and management utility
+/**
+ * General session management utility for handling JWTs.
+ *
+ * @param request {Request} The incoming request object
+ * @param session_id {string} Session identifier
+ * @param initial_data  {object} Initial data for the session
+ * @returns {object.id} Session identifier
+ * @returns {object.data} Session data object
+ * @returns {object.commit} Function for commiting/serializing the session
+ * @returns {object.verify} Helper function to verify the session
+ */
 export async function createSession<T = any>(
   request: Request,
   session_id: string,
@@ -96,8 +134,8 @@ export async function createSession<T = any>(
     session_token = session_token.substring(7);
   }
   const token_data: any | undefined = session_token
-  ? (await jwt.decode(session_token)) || undefined
-  : undefined;
+    ? (await jwt.decode(session_token)) || undefined
+    : undefined;
   const session_data: T = Object.assign(
     {},
     initial_data,
@@ -128,9 +166,36 @@ export async function createSession<T = any>(
   };
 }
 
-// Calculates the length of a string
+/**
+ * String size calculator that returns length in bytes.
+ *
+ * @param str {string} String to be measured
+ * @returns {number} Size of the string in bytes
+ */
 export function lengthInUtf8Bytes(str: string): number {
   // Matches only the 10.. bytes that are non-initial characters in a multi-byte sequence.
   var m = encodeURIComponent(str).match(/%[89ABab]/g);
   return str.length + (m ? m.length : 0);
+}
+
+/**
+ * Authentication middleware to validate the incoming user.
+ *
+ * @param request {Request} Request coming into the API.
+ */
+export async function withAuth(request: AuthenticatedRequest) {
+  try {
+    const session = await createSession<AuthSession>(request, "session");
+    if (!(await session.verify())) {
+      return failure(401, "Unauthenticated");
+    }
+    request.session = session;
+  } catch (err) {
+    return failure(
+      401,
+      "Your request could not be properly authenticated.",
+      "UNAUTHENTICATED"
+    );
+  }
+  return undefined;
 }

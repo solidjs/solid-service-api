@@ -1,3 +1,13 @@
+declare;
+{
+  var ENVIRONMENT: "production" | "development";
+  var STYTCH_PROJECT_ID: string;
+  var STYTCH_SECRET: string;
+  var STYTCH_API: string;
+  var STYTCH_URL: string;
+  var SUPABASE_URL: string;
+  var SUPABASE_KEY: string;
+}
 
 type Profile = {
   id: number;
@@ -34,11 +44,15 @@ type Profile = {
   updated_at: string;
 };
 
+interface AuthenticatedRequest extends Request {
+  session: Session<AuthSession>;
+}
+
 type AuthSession = {
-  id: string,
-  display: string,
-  avatar: string,
-  github_register: string,
+  id: string;
+  display: string;
+  avatar: string;
+  github_register: string;
 };
 
 type Session<T> = {

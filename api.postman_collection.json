@@ -47,7 +47,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"Final test\",\n    \"version\": \"1.0\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"raw": "{\n  \"title\": \"Counting Component\",\n  \"version\": \"1.0\",\n  \"public\": true,\n  \"labels\": [\n    \"counting\",\n    \"example\"\n  ],\n  \"files\": [\n    {\n      \"name\": \"main.tsx\",\n      \"content\": [\n        \"import { createSignal, onCleanup } from \\\"solid-js\\\";\",\n        \"import { render } from \\\"solid-js/web\\\";\",\n        \"\",\n        \"const CountingComponent = () => {\",\n        \"\\tconst [count, setCount] = createSignal(0);\",\n        \"\\tconst interval = setInterval(\",\n        \"\\t\\t() => setCount(c => c + 1),\",\n        \"\\t\\t1000\",\n        \"\\t);\",\n        \"\\tonCleanup(() => clearInterval(interval));\",\n        \"\\treturn <div>Count value is {count()}</div>;\",\n        \"};\",\n        \"\",\n        \"render(() => <CountingComponent />, document.getElementById(\\\"app\\\"));\"\n      ]\n    }\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -126,7 +126,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"Change this value\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"raw": "{\n  \"title\": \"Counting Component\",\n  \"version\": \"1.0\",\n  \"public\": true,\n  \"labels\": [\n    \"counting\",\n    \"example\"\n  ],\n  \"files\": [\n    {\n      \"name\": \"main.tsx\",\n      \"content\": [\n        \"import { createSignal, onCleanup } from \\\"solid-js\\\";\",\n        \"import { render } from \\\"solid-js/web\\\";\",\n        \"\",\n        \"const CountingComponent = () => {\",\n        \"\\tconst [count, setCount] = createSignal(0);\",\n        \"\\tconst interval = setInterval(\",\n        \"\\t\\t() => setCount(c => c + 1),\",\n        \"\\t\\t1000\",\n        \"\\t);\",\n        \"\\tonCleanup(() => clearInterval(interval));\",\n        \"\\treturn <div>Count value is {count()}</div>;\",\n        \"};\",\n        \"\",\n        \"render(() => <CountingComponent />, document.getElementById(\\\"app\\\"));\"\n      ]\n    }\n  ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -134,14 +134,14 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8787/repl/0efa0fb1-0634-44b5-97ad-b153d58faf6b",
+					"raw": "localhost:8787/repl/ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80",
 					"host": [
 						"localhost"
 					],
 					"port": "8787",
 					"path": [
 						"repl",
-						"0efa0fb1-0634-44b5-97ad-b153d58faf6b"
+						"ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80"
 					]
 				}
 			},
@@ -215,14 +215,51 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:8787/repl/0efa0fb1-0634-44b5-97ad-b153d58faf6b",
+					"raw": "localhost:8787/repl/ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80",
 					"host": [
 						"localhost"
 					],
 					"port": "8787",
 					"path": [
 						"repl",
-						"0efa0fb1-0634-44b5-97ad-b153d58faf6b"
+						"ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Public REPL",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl/ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl",
+						"ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80"
 					]
 				}
 			},

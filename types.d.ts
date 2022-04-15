@@ -44,6 +44,11 @@ type Profile = {
   updated_at: string;
 };
 
+type REPLFile = {
+  main: string;
+  content: string[];
+};
+
 interface AuthenticatedRequest extends Request {
   session: Session<AuthSession>;
 }

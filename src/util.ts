@@ -38,7 +38,7 @@ export function success(data: object | string | null, init?: ResponseInit) {
  */
 export function failure(
   code: number,
-  message: string,
+  message: string | object,
   status_code: string | undefined = undefined
 ) {
   return new Response(
@@ -48,7 +48,7 @@ export function failure(
     }),
     {
       status: code,
-      statusText: message,
+      statusText: typeof message === 'string' ? message : 'ERROR',
       headers: {
         ...cors(),
       },
@@ -196,6 +196,18 @@ export async function withAuth(request: AuthenticatedRequest) {
       "Your request could not be properly authenticated.",
       "UNAUTHENTICATED"
     );
+  }
+  return undefined;
+}
+
+/**
+ * Authentication middleware to validate the incoming user.
+ *
+ * @param request {Request} Request coming into the API.
+ */
+export async function withOptionalAuth(request: AuthenticatedRequest) {
+  if (request.headers.get("authorization") && request.headers.get("authorization") !== "") {
+    return withAuth(request);
   }
   return undefined;
 }

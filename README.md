@@ -88,6 +88,19 @@ Retrieves the current users profile and responds with basic information:
 
 This REPL collection enables endpoints to manage repl listings and powers the Solid Playground. REPL records have a set of basic information: `REPL data`, `labels`, `Solid version`, `size in bytes`, `creation date` and `updated date`.
 
+Note that the following API uses a constant structure for describing a REPL file. It uses the following shape:
+
+```ts
+{
+  "name": "main.tsx",
+  "content": [
+    "import { createSignal, onCleanup } from \"solid-js\";",
+    "import { render } from \"solid-js/web\";",
+    ...
+  ]
+}
+```
+
 #### List [GET] /repl?{&limit}{&offset}{&asc}
 
 Returns a list of REPLs owned by the current user. The endpoint is paginated and can potentially support filters.
@@ -100,7 +113,7 @@ Returns a list of REPLs owned by the current user. The endpoint is paginated and
       "id": "77aa5eec-19bd-471c-8b49-bd11a07c6544",
       "title": "Counter Example",
       "labels": ["examples", "basic"],
-      "data": "...REPL data...",
+      "files": [],
       "version": "1.0",
       "size": 54,
       "created_at": "2022-04-13T15:09:54.671307+00:00",
@@ -121,7 +134,7 @@ Request:
   "title": "Counter Example",
   "version": "1.0",
   "labels": ["examples", "basic"],
-  "data": "...REPL data..."
+  "files": []
 }
 ```
 
@@ -144,7 +157,7 @@ Request:
   "title": "Counter Example",
   "version": "1.0",
   "labels": ["examples", "basic"],
-  "data": "...REPL data..."
+  "files": []
 }
 ```
 
@@ -163,9 +176,12 @@ Retrieves a REPL based on the UUID.
 ```json
 {
   "title": "Counter Example",
+  "user_id": "DDQ6VDKNlcjExNjgzOTc=",
   "version": "1.0",
   "labels": ["examples", "basic"],
-  "data": "...REPL data..."
+  "files": [],
+  "created_at": "2022-04-15T16:41:24.918092+00:00",
+  "updated_at": null
 }
 ```
 
@@ -175,12 +191,15 @@ Delets a REPL based on the UUID. Successful deletions will return a status 200. 
 
 ## TO-Do & Ideas
 
-- Enable user blocking options
-- Add better validation for certain endpoints
-- Parse and validate REPLs with more granular detail (refer to Solid REPL output)
-- Add ability to save REPL to a gist
-- Add ability to create a repository of an example
-- Private/public mode
+- [x] Add better validation for certain endpoints
+- [x] Parse and validate REPLs with more granular detail (refer to Solid REPL output)
+- [x] Private/public mode for REPL
+- [x] Retrieve public REPLs
+- [ ] Add revision history and ability to retrieve
+- [ ] Add ability to fork a REPL
+- [ ] Enable user blocking options
+- [ ] Add ability to save REPL to a gist
+- [ ] Add ability to create a repository of an example
 
 ## Contributors
 

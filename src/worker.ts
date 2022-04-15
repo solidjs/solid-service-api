@@ -1,6 +1,6 @@
 import { Router } from "itty-router";
 import { withContent } from "itty-router-extras";
-import { handleOptions, withAuth } from "./util";
+import { handleOptions, withAuth, withOptionalAuth } from "./util";
 
 import login from "./routes/auth/login";
 import profile from "./routes/auth/profile";
@@ -25,7 +25,7 @@ router.get("/auth/login", login);
 router.get("/auth/callback", authorize);
 
 // REPL
-router.get("/repl/:id", withAuth, withContent, getRepl);
+router.get("/repl/:id", withOptionalAuth, withContent, getRepl);
 router.get("/repl", withAuth, listRepls);
 router.put("/repl/:id", withAuth, withContent, updateRepl);
 router.post("/repl", withAuth, withContent, createRepl);

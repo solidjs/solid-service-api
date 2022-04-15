@@ -27,7 +27,7 @@ export default async function (
 
   const { data: repls, error } = await db
     .from("repls")
-    .select("id,title,labels,data,version,size,created_at,updated_at")
+    .select("id,title,public,labels,files,version,size,created_at,updated_at")
     .eq("user_id", request.session.data.id)
     .range(offset ? parseInt(offset) : 0, limit ? parseInt(limit) : 25)
     .order("created_at", { ascending: ascending ? true : false })

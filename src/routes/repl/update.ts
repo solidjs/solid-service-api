@@ -4,6 +4,7 @@ import {
   createSupabase,
   lengthInUtf8Bytes,
 } from "../../util";
+import { validateREPLFiles } from ".";
 
 /**
  * Updates the REPL with newly supplied information.
@@ -14,7 +15,8 @@ export default async function (
       title: string;
       labels: string[];
       version: string;
-      data: string;
+      public: boolean;
+      files: REPLFile[];
     };
     params: {
       id: string;
@@ -23,8 +25,11 @@ export default async function (
 ) {
   const db = createSupabase();
   const content = request.content;
-  // TODO: Add repl content validation.
-
+  // Basic file validation
+  const fileErrors = validateREPLFiles(content.files);
+  if (fileErrors !== null) {
+    return failure(404, fileErrors, "FILE_FORMAT_ERROR");
+  }
   // If an ID param is supplied then ensure it exists
   const { count } = await db
     .from("repls")
@@ -46,9 +51,10 @@ export default async function (
       version: content.version,
       user_id: request.session.data.id,
       labels: content.labels,
-      data: content.data,
+      pubic: content.public,
+      files: content.files,
       updated_at: "NOW()",
-      size: lengthInUtf8Bytes(content.data),
+      size: lengthInUtf8Bytes(JSON.stringify(content.files)),
     })
     .match({ id: request.params.id });
 

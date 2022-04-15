@@ -115,6 +115,7 @@ Returns a list of REPLs owned by the current user. The endpoint is paginated and
       "labels": ["examples", "basic"],
       "files": [],
       "version": "1.0",
+      "public": true,
       "size": 54,
       "created_at": "2022-04-13T15:09:54.671307+00:00",
       "updated_at": null
@@ -156,6 +157,7 @@ Request:
 {
   "title": "Counter Example",
   "version": "1.0",
+  "public": true,
   "labels": ["examples", "basic"],
   "files": []
 }
@@ -179,6 +181,7 @@ Retrieves a REPL based on the UUID.
   "user_id": "DDQ6VDKNlcjExNjgzOTc=",
   "version": "1.0",
   "labels": ["examples", "basic"],
+  "public": true,
   "files": [],
   "created_at": "2022-04-15T16:41:24.918092+00:00",
   "updated_at": null

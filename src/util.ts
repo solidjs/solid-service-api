@@ -77,7 +77,7 @@ export function handleOptions(request: Request) {
   } else {
     return new Response(null, {
       headers: {
-        Allow: "GET, HEAD, POST, OPTIONS",
+        Allow: "GET, HEAD, POST, OPTIONS, PUT",
       },
     });
   }
@@ -95,7 +95,7 @@ export function cors(_request?: Request) {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": "true",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    "Access-Control-Allow-Methods": "GET,HEAD,POST,OPTIONS",
+    "Access-Control-Allow-Methods": "GET,HEAD,POST,PUT,OPTIONS",
     "Access-Control-Max-Age": "86400",
   };
 }

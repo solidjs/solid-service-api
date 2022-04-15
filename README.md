@@ -134,6 +134,7 @@ Request:
 {
   "title": "Counter Example",
   "version": "1.0",
+  "public": true,
   "labels": ["examples", "basic"],
   "files": []
 }
@@ -211,6 +212,7 @@ Delets a REPL based on the UUID. Successful deletions will return a status 200. 
 - [ ] Enable user blocking options
 - [ ] Add ability to save REPL to a gist
 - [ ] Add ability to create a repository of an example
+- [ ] Move REPL packaging and zipping to the API
 
 ## Contributors
 

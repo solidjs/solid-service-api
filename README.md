@@ -203,4 +203,4 @@ Delets a REPL based on the UUID. Successful deletions will return a status 200. 
 
 ## Contributors
 
-A special thank you to to Christian Hensen [ch99q](https://github.com/ch99q) for initially setting up the foundations of this project and sorting out the Stytch integration. A big thank you to M. Bagher Abiat [Aslemammad](https://github.com/Aslemammad) who made vite-plugin-cloudflare which is one of the best utilities we've seen for working with Cloudflare.
+A special thank you to to Christian Hansen [ch99q](https://github.com/ch99q) for initially setting up the foundations of this project and sorting out the Stytch integration. A big thank you to M. Bagher Abiat [Aslemammad](https://github.com/Aslemammad) who made vite-plugin-cloudflare which is one of the best utilities we've seen for working with Cloudflare.

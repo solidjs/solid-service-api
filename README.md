@@ -189,6 +189,14 @@ Retrieves a REPL based on the UUID.
 
 Delets a REPL based on the UUID. Successful deletions will return a status 200. Note that the service uses soft deletes. They are not retrievable via the API but are marked in the database itself.
 
+## Changelog
+
+### Version 1.0.1 (April 15, 2022)
+
+- Ability to have public/private REPL storage
+- Added validation for REPL file format (based on our original .json structure)
+- Adjusted get endpoint to return public REPL without auth token
+
 ## TO-Do & Ideas
 
 - [x] Add better validation for certain endpoints

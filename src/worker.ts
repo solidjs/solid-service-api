@@ -6,8 +6,8 @@ import login from "./routes/auth/login";
 import profile from "./routes/auth/profile";
 import authorize from "./routes/auth/authorize";
 
-import votes from "./routes/hack/votes";
-import adjustvote from "./routes/hack/adjustvote";
+// import votes from "./routes/hack/votes";
+// import adjustvote from "./routes/hack/adjustvote";
 
 import createRepl from "./routes/repl/create";
 import updateRepl from "./routes/repl/update";
@@ -32,8 +32,8 @@ router.post("/repl", withAuth, withContent, createRepl);
 router.delete("/repl/:id", withAuth, deleteRepl);
 
 // SolidHack
-router.get("/hack/votes", withAuth, votes);
-router.post("/hack/votes", withAuth, withContent, adjustvote);
+// router.get("/hack/votes", withAuth, votes);
+// router.post("/hack/votes", withAuth, withContent, adjustvote);
 
 router.get("/status", status);
 router.all("*", status);

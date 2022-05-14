@@ -14,6 +14,8 @@ import updateRepl from "./routes/repl/update";
 import listRepls from "./routes/repl/list";
 import deleteRepl from "./routes/repl/delete";
 import getRepl from "./routes/repl/get";
+import listSolidex from "./routes/solidex/list";
+import submitSolidex from "./routes/solidex/submit";
 
 import status from "./routes/status";
 
@@ -30,6 +32,11 @@ router.get("/repl", withAuth, listRepls);
 router.put("/repl/:id", withAuth, withContent, updateRepl);
 router.post("/repl", withAuth, withContent, createRepl);
 router.delete("/repl/:id", withAuth, deleteRepl);
+
+// Solidex
+router.get("/solidex/:type", listSolidex);
+router.post("/solidex", submitSolidex);
+// router.post("/hack/votes", withAuth, withContent, adjustvote);
 
 // SolidHack
 // router.get("/hack/votes", withAuth, votes);

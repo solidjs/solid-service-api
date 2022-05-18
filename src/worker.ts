@@ -28,6 +28,7 @@ router.get("/auth/callback", authorize);
 
 // REPL
 router.get("/repl/:id", withOptionalAuth, withContent, getRepl);
+router.get("/repl/:user/list", withAuth, listRepls);
 router.get("/repl", withAuth, listRepls);
 router.put("/repl/:id", withAuth, withContent, updateRepl);
 router.post("/repl", withAuth, withContent, createRepl);

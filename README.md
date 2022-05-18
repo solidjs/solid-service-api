@@ -103,7 +103,9 @@ Note that the following API uses a constant structure for describing a REPL file
 
 #### List [GET] /repl?{&limit}{&offset}{&asc}
 
-Returns a list of REPLs owned by the current user. The endpoint is paginated and can potentially support filters.
+#### List User REPLs [GET] /repl/[:githubHandle]/?{&limit}{&offset}{&asc}
+
+Returns a list of REPLs owned by the current user. The endpoint is paginated and can potentially support filters. The List and List User REPLs endpoints work the same. If the user requests/repl/davedbase it will show only that users public list.
 
 ```json
 {
@@ -193,6 +195,46 @@ Retrieves a REPL based on the UUID.
 
 Delets a REPL based on the UUID. Successful deletions will return a status 200. Note that the service uses soft deletes. They are not retrievable via the API but are marked in the database itself.
 
+### Solidex
+
+#### List [GET] /solidex/[:type]
+
+Retrieves a full list of Solid ecosystem packages. The type property can currently be `packages` or `resources`.
+
+```json
+[
+  {
+    "author": "Maksim Ivanov",
+    "author_url": "https://www.youtube.com/user/satansdeer1",
+    "categories": ["educational"],
+    "description": "Maksim Ivanov walks us through Solid.js and how to use it.",
+    "keywords": [""],
+    "link": "https://www.youtube.com/watch?v=wu6HvLoi9VQ",
+    "published_at": 1628532062000,
+    "title": "How To Convert React Application To SolidJS",
+    "type": "video"
+  }
+]
+```
+
+#### Submit [GET] /solidex
+
+Allows an external user to submit a new Solidex entry for approval. This endpoint is not fully complete and will return only dummy data. It's request body looks like the following, it's return result should be a record UUID.
+
+```json
+{
+  "author": "Maksim Ivanov",
+  "author_url": "https://www.youtube.com/user/satansdeer1",
+  "categories": ["educational"],
+  "description": "Maksim Ivanov walks us through Solid.js and how to use it.",
+  "keywords": [""],
+  "link": "https://www.youtube.com/watch?v=wu6HvLoi9VQ",
+  "published_at": 1628532062000,
+  "title": "How To Convert React Application To SolidJS",
+  "type": "video"
+}
+```
+
 ## Changelog
 
 ### Version 1.0.1 (April 15, 2022)
@@ -207,6 +249,8 @@ Delets a REPL based on the UUID. Successful deletions will return a status 200. 
 - [x] Parse and validate REPLs with more granular detail (refer to Solid REPL output)
 - [x] Private/public mode for REPL
 - [x] Retrieve public REPLs
+- [x] Add endpoint for requesting other user REPLs
+- [ ] Make REPL searchable
 - [ ] Add revision history and ability to retrieve
 - [ ] Add ability to fork a REPL
 - [ ] Enable user blocking options

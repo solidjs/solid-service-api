@@ -15,7 +15,7 @@ export default async function (
     }
   }
 ) {
-  let id = request.session.data.id;
+  let id;
   let publicValues = '(true,false)';
   const url = new URL(request.url);
   const limit = url.searchParams.get("limit");
@@ -37,6 +37,8 @@ export default async function (
     }
     id = users[0].id;
     publicValues = '(true)';
+  } else {
+    id = request.session.data.id;
   }
 
   const { count } = await db

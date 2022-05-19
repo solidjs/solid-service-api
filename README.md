@@ -250,6 +250,7 @@ Allows an external user to submit a new Solidex entry for approval. This endpoin
 - [x] Private/public mode for REPL
 - [x] Retrieve public REPLs
 - [x] Add endpoint for requesting other user REPLs
+- [ ] Handle request where application/json isn't sent as body type
 - [ ] Make REPL searchable
 - [ ] Add revision history and ability to retrieve
 - [ ] Add ability to fork a REPL

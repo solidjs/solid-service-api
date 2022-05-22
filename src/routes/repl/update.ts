@@ -51,7 +51,7 @@ export default async function (
       version: content.version,
       user_id: request.session.data.id,
       labels: content.labels,
-      pubic: content.public,
+      public: content.public,
       files: content.files,
       updated_at: "NOW()",
       size: lengthInUtf8Bytes(JSON.stringify(content.files)),

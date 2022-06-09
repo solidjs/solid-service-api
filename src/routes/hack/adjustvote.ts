@@ -1,4 +1,4 @@
-import { failure, success, createSupabase } from "../../util";
+import { failure, success, createSupabase } from "../../util/util";
 import { queryVoteCount } from "./votes";
 import z from "zod";
 

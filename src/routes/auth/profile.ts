@@ -1,4 +1,4 @@
-import { failure, success } from "../../util";
+import { failure, success } from "../../util/util";
 
 /**
  * Decodes session information and replies with current user's profile.

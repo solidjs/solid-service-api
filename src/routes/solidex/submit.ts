@@ -1,4 +1,4 @@
-import { success } from "../../util";
+import { success } from "../../util/util";
 import { Resource } from "./types";
 
 // Lists all available repls

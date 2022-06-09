@@ -37,10 +37,12 @@
     "@solid.js/solidex": "^1.0.0",
     "@supabase/supabase-js": "^1.33.3",
     "@tsndr/cloudflare-worker-jwt": "^1.1.6",
+    "cheerio": "^1.0.0-rc.11",
     "cookie": "^0.4.2",
     "fetch": "^1.1.0",
     "itty-router": "^2.6.1",
     "itty-router-extras": "^0.4.2",
+    "metascraper": "^5.29.8",
     "zod": "^3.14.4"
   }
 }

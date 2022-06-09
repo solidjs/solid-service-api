@@ -1,4 +1,4 @@
-import { failure, success, createSession, createSupabase } from "../../util";
+import { failure, success, createSession, createSupabase } from "../../util/util";
 import { SupabaseClient } from "@supabase/supabase-js";
 
 /**

@@ -1,5 +1,5 @@
 import { serialize } from "cookie";
-import { success, failure } from "../../util";
+import { success, failure } from "../../util/util";
 
 /**
  * Sets the redirect cookie and directs the user to the top of authentication process.

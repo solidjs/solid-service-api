@@ -1,4 +1,4 @@
-import { success } from "../../util";
+import { success } from "../../util/util";
 import { Resource } from "./types";
 import videos from "@solid.js/solidex/dist/videos.json";
 import podcasts from "@solid.js/solidex/dist/podcasts.json";

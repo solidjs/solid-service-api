@@ -5,7 +5,7 @@ import {
   request,
   createSupabase,
   createSession,
-} from "../../util";
+} from "../../util/util";
 
 const DEFAULT_REDIRECT = "https://www.solidjs.com";
 

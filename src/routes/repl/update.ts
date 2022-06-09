@@ -3,7 +3,7 @@ import {
   success,
   createSupabase,
   lengthInUtf8Bytes,
-} from "../../util";
+} from "../../util/util";
 import { validateREPLFiles } from ".";
 
 /**

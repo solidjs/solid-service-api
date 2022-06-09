@@ -1,4 +1,4 @@
-import { failure, success, createSupabase } from "../../util";
+import { failure, success, createSupabase } from "../../util/util";
 
 type CreateREPL = {
   title: string;

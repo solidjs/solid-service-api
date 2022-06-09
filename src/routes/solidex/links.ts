@@ -38,6 +38,8 @@ export default async function ( request: AuthenticatedRequest) {
     // dev.to
     if ($ && link.includes('dev.to/')) {
       response['published_at'] = $('time').attr('datetime') || null;
+      const article = $('article');
+      response['author'] = article.attr('data-author-name') || null;
     }
     // github.com
     if (link.includes('github.com/')) {

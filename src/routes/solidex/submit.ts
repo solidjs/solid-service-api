@@ -13,7 +13,7 @@ interface GithubFileStructure {
 const OctokitWithPlugin = Octokit.plugin(createPullRequest);
 
 // Validation sets
-const User = z.object({
+const submission = z.object({
   link: z.string().url(),
   title: z.string().max(200),
   description: z.string(),
@@ -55,7 +55,7 @@ export default async function (
 ) {
   // Perform validations
   try {
-    User.parse(request.content);
+    submission.parse(request.content);
   } catch (err) {
     if (err instanceof z.ZodError) {
       return failure(

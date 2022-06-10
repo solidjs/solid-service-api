@@ -7,6 +7,7 @@ declare;
   var STYTCH_URL: string;
   var SUPABASE_URL: string;
   var SUPABASE_KEY: string;
+  var GITHUB_TOKEN: string;
 }
 
 type Profile = {

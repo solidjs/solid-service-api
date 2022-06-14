@@ -1,4 +1,3 @@
-
 export interface Resource {
   title: string;
   link: string;
@@ -13,21 +12,21 @@ export interface Resource {
 }
 
 export const ResourceType = {
-  Article: 'article',
-  Video: 'video',
-  Podcast: 'podcast',
-  Library: 'library',
-  Package: 'package',
-}
+  Article: "article",
+  Video: "video",
+  Podcast: "podcast",
+  Library: "library",
+  Package: "package",
+};
 export const ResourceCategory = {
-  Primitives: 'primitive',
-  Routers: 'router',
-  Data: 'data',
-  UI: 'ui',
-  Plugins: 'plugin',
-  Starters: 'starters',
-  BuildUtilities: 'build_utility',
-  AddOn: 'add_on',
-  Testing: 'testing',
-  Educational: 'educational',
-}
+  Primitives: "primitive",
+  Routers: "router",
+  Data: "data",
+  UI: "ui",
+  Plugins: "plugin",
+  Starters: "starters",
+  BuildUtilities: "build_utility",
+  AddOn: "add_on",
+  Testing: "testing",
+  Educational: "educational",
+};

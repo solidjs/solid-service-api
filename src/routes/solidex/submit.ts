@@ -5,9 +5,9 @@ import { ResourceType, ResourceCategory } from "./types";
 import { createPullRequest } from "octokit-plugin-create-pull-request";
 
 interface GithubFileStructure {
-  content: string,
-  encoding: BufferEncoding
-};
+  content: string;
+  encoding: BufferEncoding;
+}
 
 // Add the PR plugin to Octokit
 const OctokitWithPlugin = Octokit.plugin(createPullRequest);
@@ -31,7 +31,7 @@ const submission = z.object({
     "build_utility",
     "add_on",
     "testing",
-    "educational"
+    "educational",
   ]),
   published_at: z.number(),
 });
@@ -58,11 +58,7 @@ export default async function (
     submission.parse(request.content);
   } catch (err) {
     if (err instanceof z.ZodError) {
-      return failure(
-        404,
-        err.issues,
-        "VALIDATION_ERROR"
-      );
+      return failure(404, err.issues, "VALIDATION_ERROR");
     }
   }
   // Handle inserting the submission
@@ -79,8 +75,8 @@ export default async function (
     auth: GITHUB_TOKEN,
   });
   const pr = await octokit.createPullRequest({
-    owner: 'solidjs',
-    repo: 'solidex',
+    owner: "solidjs",
+    repo: "solidex",
     title: `${request.content.type} Submission: ${request.content.title}`,
     body: "This pull request was submitted via the Solid Site request form.",
     base: "main",

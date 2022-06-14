@@ -15,14 +15,10 @@ export default async function (
 ) {
   let list: Array<Resource> = [];
   switch (request.params.type) {
-    case 'resources':
-      list = [
-        ...videos,
-        ...articles,
-        ...podcasts
-      ];
+    case "resources":
+      list = [...videos, ...articles, ...podcasts];
       break;
-    case 'packages':
+    case "packages":
       list = packages;
       break;
   }

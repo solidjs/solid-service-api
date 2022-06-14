@@ -48,7 +48,7 @@ export function failure(
     }),
     {
       status: code,
-      statusText: typeof message === 'string' ? message : 'ERROR',
+      statusText: typeof message === "string" ? message : "ERROR",
       headers: {
         ...cors(),
       },
@@ -134,12 +134,12 @@ export async function createSession<T = any>(
     session_token = session_token.substring(7);
   }
   const token_data: any | undefined = session_token
-    ? (await jwt.decode(session_token)) || undefined
+    ? jwt.decode(session_token)?.payload
     : undefined;
   const session_data: T = Object.assign(
     {},
     initial_data,
-    token_data ? token_data?.payload : {}
+    token_data?.payload ?? {}
   );
   const commit = async (session: Session<T>, expires_at: number) => {
     return await jwt.sign(
@@ -154,7 +154,7 @@ export async function createSession<T = any>(
     return (
       typeof session_token === "string" &&
       (await jwt.verify(session_token, STYTCH_SECRET)) &&
-      ((await jwt.decode(session_token)) as any)?.exp > Date.now()
+      (jwt.decode(session_token).payload as any).exp > Date.now()
     );
   };
   return {
@@ -206,7 +206,10 @@ export async function withAuth(request: AuthenticatedRequest) {
  * @param request {Request} Request coming into the API.
  */
 export async function withOptionalAuth(request: AuthenticatedRequest) {
-  if (request.headers.get("authorization") && request.headers.get("authorization") !== "") {
+  if (
+    request.headers.get("authorization") &&
+    request.headers.get("authorization") !== ""
+  ) {
     return withAuth(request);
   }
   return undefined;

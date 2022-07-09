@@ -22,18 +22,20 @@ const submission = z.object({
   keywords: z.array(z.string()).max(10).min(3),
   type: z.enum(["article", "video", "podcast", "package"]),
   official: z.boolean(),
-  categories: z.array(z.enum([
-    "primitive",
-    "router",
-    "data",
-    "ui",
-    "plugin",
-    "starters",
-    "build_utility",
-    "add_on",
-    "testing",
-    "educational"
-  ])),
+  categories: z.array(
+    z.enum([
+      "primitive",
+      "router",
+      "data",
+      "ui",
+      "plugin",
+      "starters",
+      "build_utility",
+      "add_on",
+      "testing",
+      "educational",
+    ])
+  ),
   published_at: z.number(),
 });
 
@@ -66,7 +68,7 @@ export default async function (
   const files = {
     [`resources/${request.content.type}s.ts`]: (file: GithubFileStructure) => {
       // @TODO: Determine a safe way to add the submission to the TS file
-    const content = file.content;
+      const content = file.content;
       return Buffer.from(content, file.encoding)
         .toString("utf-8")
         .toUpperCase();

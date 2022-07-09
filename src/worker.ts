@@ -38,7 +38,7 @@ router.delete("/repl/:id", withAuth, deleteRepl);
 // Solidex
 router.get("/solidex/links", linksSolidex);
 router.get("/solidex/:type", listSolidex);
-router.post("/solidex", submitSolidex);
+router.post("/solidex", withContent, submitSolidex);
 
 // SolidHack
 // router.get("/hack/votes", withAuth, votes);

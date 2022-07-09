@@ -12,15 +12,15 @@ export default async function (
 ) {
   // Check if the record exists
   const db = createSupabase();
-  const user_id = request.session ? request.session.data.id : 'null';
+  const user_id = request.session ? request.session.data.id : "null";
   const { data: repls, error } = await db
     .from("repls")
-    .select("id,user_id,title,labels,public,version,size,files,created_at,updated_at")
+    .select(
+      "id,user_id,title,labels,public,version,size,files,created_at,updated_at"
+    )
     .eq("id", request.params.id)
     .is("deleted_at", null)
-    .or(
-      `public.eq.true,user_id.eq.${user_id}`
-    );
+    .or(`public.eq.true,user_id.eq.${user_id}`);
 
   if (error !== null) {
     return failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");

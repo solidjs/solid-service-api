@@ -14,6 +14,7 @@ import updateRepl from "./routes/repl/update";
 import listRepls from "./routes/repl/list";
 import deleteRepl from "./routes/repl/delete";
 import getRepl from "./routes/repl/get";
+import patchRepl from "./routes/repl/patch";
 import listSolidex from "./routes/solidex/list";
 import linksSolidex from "./routes/solidex/links";
 import submitSolidex from "./routes/solidex/submit";
@@ -32,6 +33,7 @@ router.get("/repl/:id", withOptionalAuth, withContent, getRepl);
 router.get("/repl/:user/list", listRepls);
 router.get("/repl", withAuth, listRepls);
 router.put("/repl/:id", withAuth, withContent, updateRepl);
+router.patch("/repl/:id", withAuth, withContent, patchRepl);
 router.post("/repl", withAuth, withContent, createRepl);
 router.delete("/repl/:id", withAuth, deleteRepl);
 

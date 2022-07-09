@@ -10,18 +10,18 @@ type CreateREPL = {
 export default async function (
   request: AuthenticatedRequest & {
     content: CreateREPL;
-    params: {
+    params?: {
       user?: string;
-    }
+    };
   }
 ) {
   let id;
-  let publicValues = '(true,false)';
+  let publicValues = "(true,false)";
   const url = new URL(request.url);
   const limit = url.searchParams.get("limit");
   const offset = url.searchParams.get("offset");
   const ascending = url.searchParams.get("asc");
-  const userHandle = request.params.user;
+  const userHandle = request?.params?.user;
 
   // Count the listings
   const db = createSupabase();
@@ -36,7 +36,7 @@ export default async function (
       return failure(404, "Invalid user specified", "INVALID_USER");
     }
     id = users[0].id;
-    publicValues = '(true)';
+    publicValues = "(true)";
   } else {
     id = request.session.data.id;
   }
@@ -54,7 +54,7 @@ export default async function (
     .range(offset ? parseInt(offset) : 0, limit ? parseInt(limit) : 25)
     .order("created_at", { ascending: ascending ? true : false })
     .is("deleted_at", null)
-    .filter('public', 'in', publicValues);
+    .filter("public", "in", publicValues);
 
   if (error !== null) {
     return failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");

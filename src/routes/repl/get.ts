@@ -1,4 +1,7 @@
 import { failure, success, createSupabase } from "../../util/util";
+import z from "zod";
+
+const ID = z.string().uuid();
 
 /**
  * Retrieves a users REPL from the database.
@@ -10,15 +13,19 @@ export default async function (
     };
   }
 ) {
-  // Check if the record exists
   const db = createSupabase();
   const user_id = request.session ? request.session.data.id : "null";
+  // Validate parsed value is UUID or not
+  const parseUuid = ID.safeParse(request.params.id);
   const { data: repls, error } = await db
     .from("repls")
     .select(
       "id,user_id,title,labels,public,version,size,files,created_at,updated_at"
     )
-    .eq("id", request.params.id)
+    .eq(
+      parseUuid.success ? 'id' : 'guid',
+      request.params.id
+    )
     .is("deleted_at", null)
     .or(`public.eq.true,user_id.eq.${user_id}`);
 

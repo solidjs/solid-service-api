@@ -1,9 +1,9 @@
 {
-  "private": true,
   "name": "solid-service-api",
-  "version": "1.0.1",
+  "version": "1.0.5",
   "main": "dist/worker.js",
   "description": "Source code that powers api.solidjs.com.",
+  "private": true,
   "contributors": [
     {
       "name": "David Di Biase (davedbase)",
@@ -19,7 +19,7 @@
     "build": "tsc && vpc build -m src/worker.ts dist/worker.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write '**/*.{ts,css,json,md}'",
-    "deploy": "wrangler publish"
+    "deploy": "wrangler publish dist/worker.js"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.11.0",

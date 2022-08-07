@@ -10,13 +10,11 @@ command = "npm run build"
 [build.upload]
 format = "service-worker"
 
-[secrets]
+[vars]
+ENVIORNMENT = "production"
 STYTCH_PROJECT_ID = ""
 STYTCH_SECRET = ""
 STYTCH_URL = ""
 STYTCH_API = ""
 SUPABASE_URL = ""
 SUPABASE_KEY = ""
-
-[vars]
-ENVIORNMENT = "production"

@@ -5,7 +5,7 @@ import { success } from "../util/util";
  */
 export default async function votes() {
   return success({
-    version: "1.0.5",
+    version: "1.0.6",
     available: true,
     message: null,
   });

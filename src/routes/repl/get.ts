@@ -5,7 +5,7 @@ import z from "zod";
 const ID = z.string().uuid();
 
 // Build the invalid resposnse message
-const invalidItem = failure(
+const invalidItem = () => failure(
   404,
   "An invalid or unowned REPL ID was supplied",
   "INVALID_REPL_ID"
@@ -30,7 +30,7 @@ export default async function (
   if (!parseUuid.success) {
     const body = await fetch(`https://workers-kv-migrate.pilotio.workers.dev?id=${request.params.id}`);
     if (body.status !== 200) {
-      return invalidItem;
+      return invalidItem();
     }
     const json: { version: string, data: string} = await body.json();
     const decompressed = JSON.parse(decompressFromURL(json.data)!);
@@ -66,7 +66,7 @@ export default async function (
     return failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");
   }
   if (repls.length == 0 || repls === null) {
-    return invalidItem;
+    return invalidItem();
   }
   return success(repls[0]);
 }

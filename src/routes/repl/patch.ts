@@ -3,6 +3,7 @@ import {
   success,
   createSupabase,
   lengthInUtf8Bytes,
+  internalError
 } from "../../util/util";
 import { validateREPLFiles } from ".";
 
@@ -63,8 +64,6 @@ export default async function (
     })
     .match({ id: request.params.id });
 
-  if (error !== null) {
-    return failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");
-  }
+  if (error !== null) return internalError();
   return success({});
 }

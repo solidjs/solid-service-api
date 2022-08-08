@@ -1,4 +1,4 @@
-import { failure, success, createSupabase } from "../../util/util";
+import { failure, success, createSupabase, internalError } from "../../util/util";
 
 type CreateREPL = {
   title: string;
@@ -57,9 +57,7 @@ export default async function (
     .is("deleted_at", null)
     .filter("public", "in", publicValues);
 
-  if (error !== null) {
-    return failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");
-  }
+  if (error !== null) return internalError();
   return success({
     total: count,
     list: repls,

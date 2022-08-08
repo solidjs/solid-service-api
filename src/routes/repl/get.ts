@@ -1,5 +1,6 @@
-import { failure, success, createSupabase, lengthInUtf8Bytes } from "../../util/util";
+import { failure, success, createSupabase, lengthInUtf8Bytes, internalError } from "../../util/util";
 import { decompressFromURL } from '@amoutonbrady/lz-string';
+import { v4 as uuid } from 'uuid';
 import z from "zod";
 
 const ID = z.string().uuid();
@@ -21,14 +22,53 @@ export default async function (
     };
   }
 ) {
-  const db = createSupabase();
-  const user_id = request.session ? request.session.data.id : "null";
-  
   // If the ID is not a UUID then it's likely a legacy hash, attempt
   // to request from legacy worker, parse and output it.
   const parseUuid = ID.safeParse(request.params.id);
   if (!parseUuid.success) {
-    const body = await fetch(`https://workers-kv-migrate.pilotio.workers.dev?id=${request.params.id}`);
+    return await handleLegacyRepl(request.params.id);
+  }
+  const db = createSupabase();
+  const user_id = request.session ? request.session.data.id : "null";
+  const { data: repls, error } = await db
+    .from("repls")
+    .select(
+      "id,user_id,title,labels,public,version,size,files,created_at,updated_at"
+    )
+    .eq('id',request.params.id)
+    .is("deleted_at", null)
+    .or(`public.eq.true,user_id.eq.${user_id}`);
+
+  if (error !== null) {
+    return internalError();
+  }
+  if (repls.length == 0 || repls === null) {
+    return invalidItem();
+  }
+  return success(repls[0]);
+}
+
+// Handles requesting legacy REPL values from the proxy and merging into
+// new Supabase dataset. Note that this method is meant to be removed within
+// 6 months. This is a temporary stop-gap solution between KV and Supabase.
+const handleLegacyRepl = async(id: string) => {
+  // Find related REPL before proxying to the user
+  const db = createSupabase();
+  const { data: repls, error } = await db
+    .from("repls")
+    .select(
+      "id,user_id,title,labels,public,version,size,files,created_at,updated_at"
+    )
+    .eq('guid', id)
+    .is("deleted_at", null)
+    .or(`public.eq.true`);
+
+  if (error === null && repls.length !== 0) {
+    return success(repls[0]);
+  }
+
+  // Retrieve REPL from legacy worker cache
+  const body = await fetch(`https://workers-kv-migrate.pilotio.workers.dev?id=${id}`);
     if (body.status !== 200) {
       return invalidItem();
     }
@@ -40,33 +80,21 @@ export default async function (
         content: file.source
       };
     });
-    return success({
-      id: request.params.id,
-      title: 'Imported from legacy platform',
-      labels: [],
+    let payload = {
+      id: uuid(),
+      title: 'Imported legacy REPL',
+      guid: id,
+      labels: ['legacy'],
       user_id: null,
       public: true,
       version: json.version,
       size: lengthInUtf8Bytes(JSON.stringify(json.data)),
-      created_at: null,
-      updated_at: null,
-      files
-    });
-  }
-  const { data: repls, error } = await db
-    .from("repls")
-    .select(
-      "id,user_id,title,labels,public,version,size,files,created_at,updated_at"
-    )
-    .eq('id',request.params.id)
-    .is("deleted_at", null)
-    .or(`public.eq.true,user_id.eq.${user_id}`);
-
-  if (error !== null) {
-    return failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");
-  }
-  if (repls.length == 0 || repls === null) {
-    return invalidItem();
-  }
-  return success(repls[0]);
-}
+      files,
+      created_at: new Date(),
+      updated_at: null
+    };
+    // Load the record into the cache
+    const { error: insertError } = await db.from("repls").insert([ payload ]);
+    if (insertError !== null) return internalError();
+    return success(payload);
+};

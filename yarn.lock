@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@amoutonbrady/lz-string@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@amoutonbrady/lz-string/-/lz-string-0.0.1.tgz#f131cfbf0dfe3b73c8b7bd58c8e4c8fef7374f67"
+  integrity sha512-crH4ovRiiTg9y1lDTEtMwTdD4s/aYoz4EemUD3p+9GvHMOeJ3tUXQ/DQM1Mw9/wc9Od4jG97w0m9+gZmLysGFQ==
+
 "@cloudflare/workers-types@^3.11.0":
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/@cloudflare/workers-types/-/workers-types-3.11.0.tgz#8067dede888ea495cae06898d5e75e4401acf435"

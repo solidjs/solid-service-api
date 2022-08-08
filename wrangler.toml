@@ -1,14 +1,10 @@
 name = "solid-api"
-type = "javascript"
 workers_dev = true
 account_id = "fa2a5e3787deead800c822a0e1171763"
 compatibility_date = "2022-04-05"
 
 [build]
 command = "npm run build"
-
-[build.upload]
-format = "service-worker"
 
 [vars]
 ENVIORNMENT = "production"

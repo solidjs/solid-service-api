@@ -1,274 +1,435 @@
 {
-  "info": {
-    "_postman_id": "d8e46ece-6e20-4114-a9d7-bfbb42801d00",
-    "name": "Solid Services API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Get Profile",
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}",
-            "type": "text"
-          }
-        ],
-        "url": {
-          "raw": "localhost:8787/profile",
-          "host": ["localhost"],
-          "port": "8787",
-          "path": ["profile"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Create REPL",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"title\": \"Counting Component\",\n  \"version\": \"1.0\",\n  \"public\": true,\n  \"labels\": [\n    \"counting\",\n    \"example\"\n  ],\n  \"files\": [\n    {\n      \"name\": \"main.tsx\",\n      \"content\": [\n        \"import { createSignal, onCleanup } from \\\"solid-js\\\";\",\n        \"import { render } from \\\"solid-js/web\\\";\",\n        \"\",\n        \"const CountingComponent = () => {\",\n        \"\\tconst [count, setCount] = createSignal(0);\",\n        \"\\tconst interval = setInterval(\",\n        \"\\t\\t() => setCount(c => c + 1),\",\n        \"\\t\\t1000\",\n        \"\\t);\",\n        \"\\tonCleanup(() => clearInterval(interval));\",\n        \"\\treturn <div>Count value is {count()}</div>;\",\n        \"};\",\n        \"\",\n        \"render(() => <CountingComponent />, document.getElementById(\\\"app\\\"));\"\n      ]\n    }\n  ]\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:8787/repl",
-          "host": ["localhost"],
-          "port": "8787",
-          "path": ["repl"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "List REPLs",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"title\": \"My repl name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:8787/repl",
-          "host": ["localhost"],
-          "port": "8787",
-          "path": ["repl"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Put REPLs",
-      "request": {
-        "method": "PUT",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"title\": \"Counting Component\",\n  \"version\": \"1.0\",\n  \"public\": true,\n  \"labels\": [\n    \"counting\",\n    \"example\"\n  ],\n  \"files\": [\n    {\n      \"name\": \"main.tsx\",\n      \"content\": [\n        \"import { createSignal, onCleanup } from \\\"solid-js\\\";\",\n        \"import { render } from \\\"solid-js/web\\\";\",\n        \"\",\n        \"const CountingComponent = () => {\",\n        \"\\tconst [count, setCount] = createSignal(0);\",\n        \"\\tconst interval = setInterval(\",\n        \"\\t\\t() => setCount(c => c + 1),\",\n        \"\\t\\t1000\",\n        \"\\t);\",\n        \"\\tonCleanup(() => clearInterval(interval));\",\n        \"\\treturn <div>Count value is {count()}</div>;\",\n        \"};\",\n        \"\",\n        \"render(() => <CountingComponent />, document.getElementById(\\\"app\\\"));\"\n      ]\n    }\n  ]\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:8787/repl/ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80",
-          "host": ["localhost"],
-          "port": "8787",
-          "path": ["repl", "ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Delete REPL",
-      "request": {
-        "method": "DELETE",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:8787/repl/d5943629-3fcc-4984-9fa7-f273d766f847",
-          "host": ["localhost"],
-          "port": "8787",
-          "path": ["repl", "d5943629-3fcc-4984-9fa7-f273d766f847"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get REPL",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:8787/repl/ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80",
-          "host": ["localhost"],
-          "port": "8787",
-          "path": ["repl", "ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get Public REPL",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:8787/repl/ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80",
-          "host": ["localhost"],
-          "port": "8787",
-          "path": ["repl", "ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Status",
-      "protocolProfileBehavior": {
-        "disableBodyPruning": true
-      },
-      "request": {
-        "method": "GET",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "Bearer {{token}}",
-            "type": "text"
-          },
-          {
-            "key": "Content-Type",
-            "value": "application/json",
-            "type": "text"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "localhost:8787/status",
-          "host": ["localhost"],
-          "port": "8787",
-          "path": ["status"]
-        }
-      },
-      "response": []
-    }
-  ]
+	"info": {
+		"_postman_id": "d8e46ece-6e20-4114-a9d7-bfbb42801d00",
+		"name": "Solid Services API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19697305"
+	},
+	"item": [
+		{
+			"name": "Get Profile",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8787/profile",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create REPL",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Counting Component\",\n  \"version\": \"1.0\",\n  \"public\": true,\n  \"labels\": [\n    \"counting\",\n    \"example\"\n  ],\n  \"files\": [\n    {\n      \"name\": \"main.tsx\",\n      \"content\": \"import { createSignal, onCleanup } from \\\"solid-js\\\";\\r\\nimport { render } from \\\"solid-js\\/web\\\";\\r\\n\\r\\nconst CountingComponent = () => {\\r\\n\\tconst [count, setCount] = createSignal(0);\\r\\n\\tconst interval = setInterval(\\r\\n\\t\\t() => setCount(c => c + 1),\\r\\n\\t\\t1000\\r\\n\\t);\\r\\n\\tonCleanup(() => clearInterval(interval));\\r\\n\\treturn <div>Count value is {count()}<\\/div>;\\r\\n};\\r\\n\\r\\nrender(() => <CountingComponent \\/>, document.getElementById(\\\"app\\\"));\"\n      \n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List REPLs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Public User REPLs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl/davedbase/list",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl",
+						"davedbase",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Put REPLs",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Counting Component\",\n  \"version\": \"1.0\",\n  \"public\": true,\n  \"labels\": [\n    \"counting\",\n    \"example\"\n  ],\n  \"files\": [\n    {\n      \"name\": \"main.tsx\",\n      \"content\": [\n        \"import { createSignal, onCleanup } from \\\"solid-js\\\";\",\n        \"import { render } from \\\"solid-js/web\\\";\",\n        \"\",\n        \"const CountingComponent = () => {\",\n        \"\\tconst [count, setCount] = createSignal(0);\",\n        \"\\tconst interval = setInterval(\",\n        \"\\t\\t() => setCount(c => c + 1),\",\n        \"\\t\\t1000\",\n        \"\\t);\",\n        \"\\tonCleanup(() => clearInterval(interval));\",\n        \"\\treturn <div>Count value is {count()}</div>;\",\n        \"};\",\n        \"\",\n        \"render(() => <CountingComponent />, document.getElementById(\\\"app\\\"));\"\n      ]\n    }\n  ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl/ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl",
+						"ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete REPL",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl/d5943629-3fcc-4984-9fa7-f273d766f847",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl",
+						"d5943629-3fcc-4984-9fa7-f273d766f847"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get REPL",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl/ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl",
+						"ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Public REPL",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/repl/ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"repl",
+						"ae7ad0bc-3fc1-4eb8-bdf7-a024aa5a1e80"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl Create a new name name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/status",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Solidex Links",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My repl name\",\n    \"labels\": [\"test\", \"test\", \"test\"],\n    \"data\": \"sdfkshjdfkjshdfkjhsdkjfhskjdfhskjdhfksjdhfkjsdhfkjshdf\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/solidex/links?url=https://dev.to/this-is-learning/patterns-for-building-javascript-websites-in-2022-5a93",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"solidex",
+						"links"
+					],
+					"query": [
+						{
+							"key": "url",
+							"value": "https://dev.to/this-is-learning/patterns-for-building-javascript-websites-in-2022-5a93"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Solidex Submit",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"title\": \"Test\",\n  \"link\": \"https://www.youtube.com\",\n  \"author\": \"David\",\n  \"author_url\": \"https://www.david.com\",\n  \"description\": \"Hello\",\n  \"type\": \"article\",\n  \"categories\": [\"starters\"],\n  \"keywords\": [\"test\"],\n  \"official\": false,\n  \"published_at\": 1654926042000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8787/solidex",
+					"host": [
+						"localhost"
+					],
+					"port": "8787",
+					"path": [
+						"solidex"
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }

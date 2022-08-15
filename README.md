@@ -93,11 +93,7 @@ Note that the following API uses a constant structure for describing a REPL file
 ```ts
 {
   "name": "main.tsx",
-  "content": [
-    "import { createSignal, onCleanup } from \"solid-js\";",
-    "import { render } from \"solid-js/web\";",
-    ...
-  ]
+  "content": "import { createSignal, onCleanup } from \"solid-js\";\r\nimport { render } from \"solid-js\/web\";\r\n\r\nconst CountingComponent = () => {\r\n\tconst [count, setCount] = createSignal(0);\r\n\tconst interval = setInterval(\r\n\t\t() => setCount(c => c + 1),\r\n\t\t1000\r\n\t);\r\n\tonCleanup(() => clearInterval(interval));\r\n\treturn <div>Count value is {count()}<\/div>;\r\n};\r\n\r\nrender(() => <CountingComponent \/>, document.getElementById(\"app\"));"
 }
 ```
 

@@ -3,7 +3,7 @@ import z, { ZodIssue } from "zod";
 const File = z.array(
   z.object({
     name: z.string().min(3).max(50),
-    content: z.array(z.string()),
+    content: z.string(),
   })
 );
 

@@ -3,7 +3,7 @@ import {
   success,
   createSupabase,
   lengthInUtf8Bytes,
-  internalError
+  internalError,
 } from "../../util/util";
 import { validateREPLFiles } from ".";
 

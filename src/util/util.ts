@@ -218,4 +218,5 @@ export async function withOptionalAuth(request: AuthenticatedRequest) {
 /**
  * Returns a failure notice as a standard internal error message.
  */
-export const internalError = () => failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");
+export const internalError = () =>
+  failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");

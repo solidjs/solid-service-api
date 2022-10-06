@@ -97,6 +97,8 @@ Note that the following API uses a constant structure for describing a REPL file
 }
 ```
 
+The REPL endpoint supports authenticated REPL and anonymous creation. Since anonymous REPLs have no user associated this API issues a special token keyed to the REPL record. This token is only issued on record creation and can never be retrieved afterwards. The token is to be supplied during update/patching of the REPL record in the future.
+
 #### List [GET] /repl?{&limit}{&offset}{&asc}
 
 #### List User REPLs [GET] /repl/[:githubHandle]/?{&limit}{&offset}{&asc}
@@ -124,7 +126,7 @@ Returns a list of REPLs owned by the current user. The endpoint is paginated and
 
 #### Create [POST] /repl
 
-Creates a new REPL record for the user.
+Creates a new REPL record for the user. The REPL creation endpoint supports anonymous content as well. When a user token isn't supplied the service will create the record without any user association and return a `write_token` property. This may be used in place of the Bearer token in the `PATCH` and `PUT` endpoints.
 
 Request:
 
@@ -148,7 +150,7 @@ Response:
 
 #### Update [PUT] /repl/[:id]
 
-Update a new REPL record for the user.
+Update a new REPL record for the user. This endpoint accepts `write_token` in the body in place of the Bearer token if an anonymous REPL is to be edited. This token is issued on REPL creation.
 
 Request:
 
@@ -239,6 +241,10 @@ Allows an external user to submit a new Solidex entry for approval. This endpoin
 - Added validation for REPL file format (based on our original .json structure)
 - Adjusted get endpoint to return public REPL without auth token
 
+### Version 1.0.8 (October 6, 2022)
+
+- Added anonymous REPL creation + write_token for patch and update
+
 ## TO-Do & Ideas
 
 - [x] Add better validation for certain endpoints
@@ -246,6 +252,7 @@ Allows an external user to submit a new Solidex entry for approval. This endpoin
 - [x] Private/public mode for REPL
 - [x] Retrieve public REPLs
 - [x] Add endpoint for requesting other user REPLs
+- [x] Anonumous REPL creation
 - [ ] Handle request where application/json isn't sent as body type
 - [ ] Make REPL searchable
 - [ ] Add revision history and ability to retrieve

@@ -32,9 +32,9 @@ router.get("/auth/callback", authorize);
 router.get("/repl/:id", withOptionalAuth, withContent, getRepl);
 router.get("/repl/:user/list", listRepls);
 router.get("/repl", withAuth, listRepls);
-router.put("/repl/:id", withAuth, withContent, updateRepl);
-router.patch("/repl/:id", withAuth, withContent, patchRepl);
-router.post("/repl", withAuth, withContent, createRepl);
+router.put("/repl/:id", withOptionalAuth, withContent, updateRepl);
+router.patch("/repl/:id", withOptionalAuth, withContent, patchRepl);
+router.post("/repl", withOptionalAuth, withContent, createRepl);
 router.delete("/repl/:id", withAuth, deleteRepl);
 
 // Solidex

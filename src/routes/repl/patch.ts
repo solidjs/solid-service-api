@@ -13,6 +13,7 @@ import { validateREPLFiles } from ".";
 export default async function (
   request: AuthenticatedRequest & {
     content: {
+      token?: string;
       title?: string;
       labels?: string[];
       version?: string;
@@ -24,8 +25,19 @@ export default async function (
     };
   }
 ) {
-  const db = createSupabase();
   const content = request.content;
+  const anonymous = request.session ? true : false;
+  let user_id, lookup_key, lookup_value;
+  // Override lookup value if anon or a user
+  if (!anonymous) {
+    lookup_key = "write_token";
+    lookup_value = content.token;
+  } else {
+    user_id = request.session.data.id;
+    lookup_key = "user_id";
+    lookup_value = user_id;
+  }
+  const db = createSupabase();
   // Basic file validation
   if (content.files) {
     const fileErrors = validateREPLFiles(content.files);
@@ -33,13 +45,12 @@ export default async function (
       return failure(404, fileErrors, "FILE_FORMAT_ERROR");
     }
   }
-
   // If an ID param is supplied then ensure it exists
   const { count, data } = await db
     .from("repls")
     .select("*", { count: "exact" })
     .eq("id", request.params.id)
-    .eq("user_id", request.session.data.id);
+    .eq(lookup_key, lookup_value);
 
   if (count == 0 || data == null) {
     return failure(

@@ -241,7 +241,7 @@ Allows an external user to submit a new Solidex entry for approval. This endpoin
 - Added validation for REPL file format (based on our original .json structure)
 - Adjusted get endpoint to return public REPL without auth token
 
-### Version 1.0.8 (October 6, 2022)
+### Version 1.0.9 (October 6, 2022)
 
 - Added anonymous REPL creation + write_token for patch and update
 

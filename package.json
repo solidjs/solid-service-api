@@ -48,6 +48,7 @@
     "metascraper": "^5.29.8",
     "octokit-plugin-create-pull-request": "^3.11.0",
     "uuid": "^8.3.2",
+    "wrangler": "^2.1.10",
     "zod": "^3.17.3"
   }
 }

@@ -5,7 +5,7 @@ import {
   lengthInUtf8Bytes,
   internalError,
 } from "../../util/util";
-import { validateREPLFiles } from ".";
+import { validateREPLOwnership, validateREPLFiles } from ".";
 
 /**
  * Updates the REPL with newly supplied information.
@@ -13,7 +13,7 @@ import { validateREPLFiles } from ".";
 export default async function (
   request: AuthenticatedRequest & {
     content: {
-      token?: string;
+      write_token?: string;
       title?: string;
       labels?: string[];
       version?: string;
@@ -26,19 +26,23 @@ export default async function (
   }
 ) {
   const content = request.content;
-  const anonymous = request.session ? true : false;
-  let user_id, lookup_key, lookup_value;
-  // Override lookup value if anon or a user
-  if (!anonymous) {
-    lookup_key = "write_token";
-    lookup_value = content.token;
-  } else {
-    user_id = request.session.data.id;
-    lookup_key = "user_id";
-    lookup_value = user_id;
-  }
   const db = createSupabase();
-  // Basic file validation
+  // Check ownership of the REPL
+  try {
+    await validateREPLOwnership(
+      db,
+      request.params.id,
+      request.session?.data?.id,
+      content.write_token,
+    );
+  } catch (error: any) {
+    return failure(
+      error.status_code,
+      error.message,
+      error.status,
+    );
+  }
+  // Validate REPL structure
   if (content.files) {
     const fileErrors = validateREPLFiles(content.files);
     if (fileErrors !== null) {
@@ -46,13 +50,12 @@ export default async function (
     }
   }
   // If an ID param is supplied then ensure it exists
-  const { count, data } = await db
+  const { data } = await db
     .from("repls")
-    .select("*", { count: "exact" })
-    .eq("id", request.params.id)
-    .eq(lookup_key, lookup_value);
+    .select("*")
+    .eq("id", request.params.id);
 
-  if (count == 0 || data == null) {
+  if (data == null) {
     return failure(
       404,
       "An invalid or unowned REPL ID was supplied",

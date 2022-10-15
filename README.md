@@ -148,6 +148,24 @@ Response:
 }
 ```
 
+#### Transfer [POST] /repl/[:id]/transfer
+
+Transfers a REPL from one user to another. Transfers of anonymous REPLs are also by supplying a write_token. The following example shows a request with a token.
+
+Request:
+
+```json
+{
+  "write_token": "...."
+}
+```
+
+Response:
+
+```json
+{}
+```
+
 #### Update [PUT] /repl/[:id]
 
 Update a new REPL record for the user. This endpoint accepts `write_token` in the body in place of the Bearer token if an anonymous REPL is to be edited. This token is issued on REPL creation.
@@ -245,6 +263,11 @@ Allows an external user to submit a new Solidex entry for approval. This endpoin
 
 - Added anonymous REPL creation + write_token for patch and update
 
+### Version 1.0.10 (October 15, 2022)
+
+- Improved error responses for invalid token/user on write update/patch
+- Added REPL transfer mechanism
+
 ## TO-Do & Ideas
 
 - [x] Add better validation for certain endpoints
@@ -252,7 +275,8 @@ Allows an external user to submit a new Solidex entry for approval. This endpoin
 - [x] Private/public mode for REPL
 - [x] Retrieve public REPLs
 - [x] Add endpoint for requesting other user REPLs
-- [x] Anonumous REPL creation
+- [x] Anonymous REPL creation
+- [x] Transfer REPLs between users
 - [ ] Handle request where application/json isn't sent as body type
 - [ ] Make REPL searchable
 - [ ] Add revision history and ability to retrieve

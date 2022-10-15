@@ -6,7 +6,7 @@ import { failure, success } from "../../util/util";
 export default async function (request: AuthenticatedRequest) {
   // Verify the session
   if (!(await request.session.verify())) {
-    return failure(401, "Unauthenticated");
+    return failure(401, "Unauthenticated request, please supply a valid user token.", "UNAUTHORIZED_ACCESS");
   }
   const registered = new Date(request.session.data.github_register);
   const max = new Date("2022-01-07T00:00:42Z");

@@ -187,7 +187,11 @@ export async function withAuth(request: AuthenticatedRequest) {
   try {
     const session = await createSession<AuthSession>(request, "session");
     if (!(await session.verify())) {
-      return failure(401, "Unauthenticated");
+      return failure(
+        401,
+        "Your request could not be properly authenticated.",
+        "AUTHORIZATION_FAILURE"
+      );
     }
     request.session = session;
   } catch (err) {
@@ -220,3 +224,17 @@ export async function withOptionalAuth(request: AuthenticatedRequest) {
  */
 export const internalError = () =>
   failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");
+
+/**
+ * API specific error message.
+ */
+export class APIError extends Error {
+  public status: string;
+  public status_code: number;
+  constructor(message: string, status: string, status_code: number) {
+    super(message);
+    this.status_code = status_code;
+    this.status = status;
+    this.name = "ValidationError";
+  }
+}

@@ -76,9 +76,9 @@ const handleLegacyRepl = async (id: string) => {
   const json: { version: string; data: string } = await body.json();
   const decompressed = JSON.parse(decompressFromURL(json.data)!);
   const files = (decompressed || []).map(
-    (file: { name: string; source: string }) => {
+    (file: { name: string; source: string, type: string }) => {
       return {
-        name: `${file.name}.tsx`,
+        name: `${file.name}.${file.type}`,
         content: file.source,
       };
     }

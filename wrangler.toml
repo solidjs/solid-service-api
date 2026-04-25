@@ -1,10 +1,8 @@
 name = "solid-api"
+main = "src/worker.ts"
 workers_dev = true
 account_id = "fa2a5e3787deead800c822a0e1171763"
-compatibility_date = "2022-04-05"
-
-[build]
-command = "npm run build"
+compatibility_date = "2024-09-23"
 
 [vars]
 ENVIORNMENT = "production"

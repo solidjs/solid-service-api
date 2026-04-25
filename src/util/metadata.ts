@@ -1,4 +1,4 @@
-import * as cheerio from "cheerio/lib/slim";
+import * as cheerio from "cheerio";
 
 type Meta = { [key: string]: string | undefined };
 

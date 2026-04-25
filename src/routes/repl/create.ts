@@ -40,19 +40,22 @@ export default async function (
     return failure(404, fileErrors, "FILE_FORMAT_ERROR");
   }
   const db = createSupabase();
-  const { data: repls, error } = await db.from("repls").insert([
-    {
-      user_id,
-      title: content.title,
-      version: content.version,
-      labels: content.labels,
-      public: content.public,
-      files: content.files,
-      write_token,
-      size: lengthInUtf8Bytes(JSON.stringify(content.files)),
-    },
-  ]);
-  if (error !== null) {
+  const { data: repls, error } = await db
+    .from("repls")
+    .insert([
+      {
+        user_id,
+        title: content.title,
+        version: content.version,
+        labels: content.labels,
+        public: content.public,
+        files: content.files,
+        write_token,
+        size: lengthInUtf8Bytes(JSON.stringify(content.files)),
+      },
+    ])
+    .select("id");
+  if (error !== null || repls === null || repls.length === 0) {
     console.log(error);
     return failure(404, "Internal or unknown error detected", "INTERNAL_ERROR");
   }

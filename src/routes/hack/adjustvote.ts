@@ -1,5 +1,5 @@
 import { failure, success, createSupabase } from "../../util/util";
-import { queryVoteCount } from "./votes";
+import { queryVoteCount, VoteCategory } from "./votes";
 import z from "zod";
 
 const validate = z.object({
@@ -13,7 +13,7 @@ const validate = z.object({
 export default async function (
   request: AuthenticatedRequest & {
     content: {
-      category: string;
+      category: VoteCategory;
       selection: string;
     };
   }
@@ -36,12 +36,11 @@ export default async function (
   // Toggle the vote in the database
   const db = createSupabase();
   const votes = await queryVoteCount(request.session.data.id, db);
+  const bucket = votes[content.category];
   // Insert the vote
-  if (!votes[content.category].selections.includes(content.selection)) {
+  if (!bucket.selections.includes(content.selection)) {
     // Ensure the user isn't over voting
-    if (
-      votes[content.category].selections.length >= votes[content.category].total
-    ) {
+    if (bucket.selections.length >= bucket.total) {
       return failure(400, "Maximum votes reached.");
     }
     await db.from("solidhack_votes").insert([
@@ -51,7 +50,7 @@ export default async function (
         selection: content.selection,
       },
     ]);
-    votes[content.category].selections.push(content.selection);
+    bucket.selections.push(content.selection);
     // Remove the vote
   } else {
     await db
@@ -60,10 +59,8 @@ export default async function (
       .eq("user_id", request.session.data.id)
       .eq("category", content.category)
       .eq("selection", content.selection);
-    const position = votes[content.category].selections.indexOf(
-      content.category
-    );
-    votes[content.category].selections.splice(position);
+    const position = bucket.selections.indexOf(content.category);
+    bucket.selections.splice(position);
   }
   return success(votes);
 }

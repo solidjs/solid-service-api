@@ -8,7 +8,7 @@ import { createClient } from "@supabase/supabase-js";
  */
 export function createSupabase() {
   return createClient(SUPABASE_URL, SUPABASE_KEY, {
-    fetch,
+    global: { fetch },
   });
 }
 
@@ -151,11 +151,9 @@ export async function createSession<T = any>(
     );
   };
   const verify = async (): Promise<boolean> => {
-    return (
-      typeof session_token === "string" &&
-      (await jwt.verify(session_token, STYTCH_SECRET)) &&
-      (jwt.decode(session_token).payload as any).exp > Date.now()
-    );
+    if (typeof session_token !== "string") return false;
+    if (!(await jwt.verify(session_token, STYTCH_SECRET))) return false;
+    return (jwt.decode(session_token).payload as any).exp > Date.now();
   };
   return {
     id: session_id,

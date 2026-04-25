@@ -6,7 +6,13 @@ import { createPullRequest } from "octokit-plugin-create-pull-request";
 
 interface GithubFileStructure {
   content: string;
-  encoding: BufferEncoding;
+  encoding: "base64" | "utf-8";
+}
+
+function decodeGithubContent(content: string, encoding: "base64" | "utf-8") {
+  if (encoding === "utf-8") return content;
+  const bytes = Uint8Array.from(atob(content), (c) => c.charCodeAt(0));
+  return new TextDecoder("utf-8").decode(bytes);
 }
 
 // Add the PR plugin to Octokit
@@ -39,23 +45,23 @@ const submission = z.object({
   published_at: z.number(),
 });
 
+interface SubmitRequest extends Request {
+  content: {
+    title: string;
+    link: string;
+    author: string;
+    author_url: string;
+    description: string;
+    type: typeof ResourceType;
+    categories: (typeof ResourceCategory)[];
+    keywords: string[];
+    official: boolean;
+    published_at: number;
+  };
+}
+
 // Lists all available repls
-export default async function (
-  request: AuthenticatedRequest & {
-    content: {
-      title: string;
-      link: string;
-      author: string;
-      author_url: string;
-      description: string;
-      type: typeof ResourceType;
-      categories: typeof ResourceCategory[];
-      keywords: string[];
-      official: boolean;
-      published_at: number;
-    };
-  }
-) {
+export default async function (request: SubmitRequest) {
   // Perform validations
   try {
     submission.parse(request.content);
@@ -68,10 +74,7 @@ export default async function (
   const files = {
     [`resources/${request.content.type}s.ts`]: (file: GithubFileStructure) => {
       // @TODO: Determine a safe way to add the submission to the TS file
-      const content = file.content;
-      return Buffer.from(content, file.encoding)
-        .toString("utf-8")
-        .toUpperCase();
+      return decodeGithubContent(file.content, file.encoding).toUpperCase();
     },
   };
   const octokit = new OctokitWithPlugin({

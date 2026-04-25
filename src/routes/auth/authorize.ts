@@ -53,18 +53,15 @@ export default async function (req: Request) {
 
   // Upsert the user in the dataaset
   const db = createSupabase();
-  await db.from("users").insert(
-    [
-      {
-        id: profile.node_id,
-        handle: profile.name,
-        profile,
-        provider: "github",
-        lastlogin_at: "NOW()",
-      },
-    ],
-    { upsert: true }
-  );
+  await db.from("users").upsert([
+    {
+      id: profile.node_id,
+      handle: profile.name,
+      profile,
+      provider: "github",
+      lastlogin_at: "NOW()",
+    },
+  ]);
 
   return new Response(null, {
     status: 302,

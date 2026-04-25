@@ -42,7 +42,7 @@ router.delete("/repl/:id", withAuth, deleteRepl);
 // Solidex
 router.get("/solidex/links", linksSolidex);
 router.get("/solidex/:type", listSolidex);
-router.post("/solidex", withContent, submitSolidex);
+router.post("/solidex", withContent, submitSolidex as any);
 
 // SolidHack
 // router.get("/hack/votes", withAuth, votes);
@@ -51,9 +51,14 @@ router.post("/solidex", withContent, submitSolidex);
 router.get("/status", status);
 router.all("*", status);
 
-addEventListener("fetch", (event: FetchEvent) => {
-  if (event.request.method === "OPTIONS") {
-    return event.respondWith(handleOptions(event.request));
-  }
-  return event.respondWith(router.handle(event.request));
-});
+export default {
+  fetch(request: Request, env: Record<string, unknown>) {
+    // Expose environment variables on globalThis to preserve the existing
+    // service-worker-era access pattern (e.g. STYTCH_API, SUPABASE_URL).
+    Object.assign(globalThis, env);
+    if (request.method === "OPTIONS") {
+      return handleOptions(request);
+    }
+    return router.fetch(request);
+  },
+};

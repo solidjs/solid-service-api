@@ -1,4 +1,4 @@
-name = "solid-api"
+name = 'solid-service-api'
 main = "src/worker.ts"
 workers_dev = true
 account_id = "0122bb1c557f781119974e88b59c6146"

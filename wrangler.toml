@@ -4,15 +4,6 @@ workers_dev = true
 account_id = "0122bb1c557f781119974e88b59c6146"
 compatibility_date = "2026-04-21"
 
-[vars]
-ENVIORNMENT = "production"
-STYTCH_PROJECT_ID = ""
-STYTCH_SECRET = ""
-STYTCH_URL = ""
-STYTCH_API = ""
-SUPABASE_URL = ""
-SUPABASE_KEY = ""
-
 [observability]
 [observability.logs]
 enabled = false

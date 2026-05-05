@@ -12,3 +12,8 @@ STYTCH_URL = ""
 STYTCH_API = ""
 SUPABASE_URL = ""
 SUPABASE_KEY = ""
+
+[observability]
+[observability.logs]
+enabled = false
+invocation_logs = true
